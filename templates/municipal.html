@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mb-5">
+    <div class="badge bg-success px-3 py-2 mb-2 shadow-sm text-uppercase">Public Infrastructure</div>
+    <h2 class="display-6 fw-bold">Municipal Services</h2>
+    <p class="text-muted">Report issues related to city maintenance and public utilities</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/municipal/roads" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/roads.png" alt="Roads" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Roads & Infrastructure</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/municipal/water" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/water.png" alt="Water" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Water & Sanitation</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/municipal/health" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/health.png" alt="Health" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Public Health</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/municipal/electricity" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/electricity.png" alt="Electricity" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Electricity & Lighting</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/other" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3 text-muted">
+                    <img src="/static/images/other.png" alt="Other" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Other Issues</h6>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<style>
+    .service-tile {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        border: 1.5px solid #eee;
+        background: white;
+    }
+    .service-tile:hover {
+        transform: translateY(-5px);
+        background-color: #f0fff4; /* Light green tint for Municipal */
+        border-color: #198754;
+    }
+    .icon-box {
+        height: 100px; /* Consistent height for icons */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .icon-box img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+</style>
+
+{% endblock %}

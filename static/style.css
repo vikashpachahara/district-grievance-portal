@@ -1,0 +1,99 @@
+/* --- OFFICIAL PORTAL THEME VARIABLES --- */
+:root {
+    --gov-blue: #004a99;
+    --gov-success: #198754;
+    --gov-danger: #dc3545;
+    --bg-light: #f4f7f6;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* --- GLOBAL TWEAKS --- */
+body {
+    background-color: var(--bg-light);
+    color: #333;
+}
+
+/* --- SERVICE TILES (POLICE, MUNICIPAL, ETC) --- */
+/* This ensures all your icons look the same width/height */
+.service-tile {
+    transition: var(--transition);
+    border-radius: 15px !important;
+    border: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+.service-tile:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1) !important;
+}
+
+.icon-box {
+    height: 100px; /* Forces uniform size across all categories */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.icon-box img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain; /* Prevents distortion seen in your earlier screenshots */
+}
+
+/* --- FORM ENHANCEMENTS --- */
+.card.shadow {
+    border-radius: 12px;
+}
+
+input.form-control:focus, 
+textarea.form-control:focus {
+    border-color: var(--gov-blue);
+    box-shadow: 0 0 0 0.25rem rgba(0, 74, 153, 0.1);
+}
+
+/* --- DASHBOARD LOGOS (The ones from your screenshots) --- */
+.card-img-container {
+    height: 180px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* --- TRACKING TIMELINE (TRACK.HTML) --- */
+.timeline {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #dee2e6;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -1.95rem;
+    width: 1rem;
+    height: 1rem;
+    background: #fff;
+    border: 2px solid var(--gov-blue);
+    border-radius: 50%;
+}
+
+/* --- CAMERA PREVIEW BOX --- */
+#video, #preview {
+    border-radius: 8px;
+    background-color: #000;
+}

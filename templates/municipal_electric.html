@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb bg-white p-2 rounded shadow-sm border border-light">
+        <li class="breadcrumb-item"><a href="/dashboard" class="text-decoration-none text-success">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/municipal" class="text-decoration-none text-success">Municipal Services</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Electricity & Lighting</li>
+    </ol>
+</nav>
+
+<div class="text-center mb-5">
+    <div class="mb-3">
+        <i class="fa-solid fa-bolt-lightning fa-3x text-warning"></i>
+    </div>
+    <h2 class="display-6 fw-bold text-dark">Electricity & Lighting</h2>
+    <p class="text-muted">Report hazardous wires, broken street lights, or power fluctuations</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    
+    <div class="col-6 col-md-4">
+        <a href="/complaint/municipal/street_light" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/street_light.png" alt="Street Light" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Street Light Repair</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4">
+        <a href="/complaint/municipal/dangling_wires" class="card h-100 text-decoration-none service-tile shadow-sm border-warning">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/dangling_wires.png" alt="Dangling Wires" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Dangling Wires</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4">
+        <a href="/complaint/municipal/power_issue" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/power_issue.png" alt="Power Issue" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Power Supply Issue</h6>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<style>
+    .service-tile {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        border: 1.5px solid #eee;
+        background: white;
+    }
+    .service-tile:hover {
+        transform: translateY(-5px);
+        background-color: #fcfdf0; /* Subtle warm tint for electricity theme */
+        border-color: #ffc107; /* Warning yellow border */
+    }
+    .icon-box {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px;
+    }
+    .icon-box img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+</style>
+
+{% endblock %}
