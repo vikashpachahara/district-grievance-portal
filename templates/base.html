@@ -34,7 +34,6 @@
             padding: 40px 0;
         }
 
-        /* Responsive Grid for all icons we fixed earlier */
         .icon-box {
             height: 100px;
             display: flex;
@@ -56,7 +55,6 @@
             border-top: 5px solid var(--gov-dark-blue);
         }
 
-        /* Style for the "Back" buttons we used in many pages */
         .breadcrumb-item a {
             text-decoration: none;
             color: var(--gov-blue);
@@ -75,11 +73,11 @@
             </h1>
             
             <div>
-                {% if session['user'] %}
+                {% if session.get('user') %}
                     <span class="me-3 d-none d-md-inline small text-white-50">Citizen Mode</span>
                     <a href="/dashboard" class="btn btn-sm btn-light me-2">Home</a>
                     <a href="/logout" class="btn btn-sm btn-outline-light">Logout</a>
-                {% elif session['admin'] %}
+                {% elif session.get('admin') %}
                     <span class="me-3 d-none d-md-inline small text-warning font-monospace">ADMIN ACCESS</span>
                     <a href="/admin_dashboard" class="btn btn-sm btn-warning me-2">Panel</a>
                     <a href="/logout" class="btn btn-sm btn-outline-light">Logout</a>
