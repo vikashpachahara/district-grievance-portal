@@ -10,6 +10,9 @@ import requests
 app = Flask(__name__)
 app.secret_key = "government_secure_key_2026"
 
+# Fix for "Request Entity Too Large" - Allows up to 16MB uploads
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 
+
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 UPLOAD_FOLDER = "static/uploads"
@@ -153,21 +156,17 @@ def complaint(department, category):
     if request.method == "POST":
         description = request.form.get("description")
         
-        # Capture Both Formats
         file = request.files.get("image")
-        image_data = request.form.get("image_data") # Custom Webcam Base64
+        image_data = request.form.get("image_data")
         
         lat = request.form.get("latitude")
         lon = request.form.get("longitude")
 
-        # Save the image (File Upload OR Webcam Snap)
         file_data = ""
         if file and file.filename != "":
-            # If they uploaded a file
             encoded_string = base64.b64encode(file.read()).decode('utf-8')
             file_data = f"data:{file.content_type};base64,{encoded_string}"
         elif image_data and "," in image_data:
-            # If they snapped a live picture (already base64 formatted)
             file_data = image_data
         
         readable_address = request.form.get("location", "Address not provided")
