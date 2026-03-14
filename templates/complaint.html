@@ -51,7 +51,6 @@
 </div>
 
 <script>
-    // --- 1. LIVE CAMERA SCRIPT ---
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const snap = document.getElementById('snap');
@@ -59,7 +58,6 @@
     const imageDataInput = document.getElementById('image_data');
     const retake = document.getElementById('retake');
 
-    // Start Webcam
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then(function(stream) {
@@ -71,16 +69,24 @@
         });
     }
 
-    // Take Picture
+    // Capture and Compress Image Fix
     snap.addEventListener("click", function() {
-        if (!video.videoWidth) return; // Prevent clicking before video loads
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        if (!video.videoWidth) return; 
         
-        const dataURI = canvas.toDataURL('image/png');
-        imageDataInput.value = dataURI; // Save base64 data to hidden input
+        // Shrink the image width to 800px max so it fits in the database perfectly
+        const maxWidth = 800;
+        const scaleFactor = maxWidth / video.videoWidth;
         
+        canvas.width = maxWidth;
+        canvas.height = video.videoHeight * scaleFactor;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // Compress as JPEG at 60% quality to avoid "Too Large" error
+        const dataURI = canvas.toDataURL('image/jpeg', 0.6); 
+        
+        imageDataInput.value = dataURI;
         preview.src = dataURI;
         preview.style.display = 'block';
         video.style.display = 'none';
@@ -88,7 +94,6 @@
         retake.style.display = 'block';
     });
 
-    // Retake Picture
     retake.addEventListener("click", function() {
         imageDataInput.value = "";
         preview.style.display = 'none';
@@ -97,7 +102,6 @@
         retake.style.display = 'none';
     });
 
-    // --- 2. GPS CAPTURE SCRIPT ---
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             document.getElementById('lat').value = position.coords.latitude;
