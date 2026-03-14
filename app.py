@@ -18,13 +18,13 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# MODIFIED: Added error handling and timeout to prevent boot-looping
+# MODIFIED: Added connection timeout to allow the server to wake up
 def get_db_connection():
     try:
         conn = psycopg2.connect(
             DATABASE_URL, 
             sslmode='require', 
-            connect_timeout=10  # Gives the DB time to wake up
+            connect_timeout=10
         )
         return conn
     except Exception as e:
@@ -207,7 +207,7 @@ def my_complaints():
         cur.close()
         conn.close()
         return render_template("my_complaints.html", data=data)
-    return "Database Error", 500
+    return "Database waking up... refresh in 10 seconds", 503
 
 @app.route("/track", methods=["GET", "POST"])
 def track():
@@ -231,13 +231,15 @@ def admin():
             return redirect(url_for('admin_dashboard'))
     return render_template("admin_login.html")
 
+# MODIFIED: Memory optimization for Base64 images to prevent Render crash
 @app.route("/admin_dashboard")
 def admin_dashboard():
     if "admin" not in session: return redirect(url_for('admin'))
     conn = get_db_connection()
     if conn:
         cur = conn.cursor(cursor_factory=DictCursor)
-        cur.execute("SELECT * FROM complaints ORDER BY date DESC, time DESC")
+        # Limiting to 10 latest complaints to prevent memory overflow
+        cur.execute("SELECT * FROM complaints ORDER BY date DESC, time DESC LIMIT 10")
         data = cur.fetchall()
         cur.close()
         conn.close()
@@ -256,7 +258,6 @@ def update_status():
     return redirect(url_for('admin_dashboard'))
 
 if __name__ == "__main__":
-    # MODIFIED: Database init is now inside the start block to ensure 
-    # the server starts listening before making external calls
+    # Ensure tables exist before start
     init_db()
-    app.run(debug=True)
+    app.run(debug=False) # Faster and more stable for cloud hosting
