@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb bg-white p-2 rounded shadow-sm">
+        <li class="breadcrumb-item"><a href="/dashboard" class="text-decoration-none text-success">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/municipal" class="text-decoration-none text-success">Municipal Services</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Public Health</li>
+    </ol>
+</nav>
+
+<div class="text-center mb-5">
+    <h2 class="display-6 fw-bold text-dark">Public Health & Sanitation</h2>
+    <p class="text-muted">Report health hazards, pest issues, or animal-related grievances</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/mosquito" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/mosquito.png" alt="Mosquito" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Mosquito Fogging</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/stray_animal" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/stray_animal.png" alt="Stray Animal" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Stray Animal Issue</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/toilet" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/toilet.png" alt="Public Toilet" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Public Toilets</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/pest" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/pest.png" alt="Pest Control" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Pest Control</h6>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<style>
+    .service-tile {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        border: 1.5px solid #eee;
+        background: white;
+    }
+    .service-tile:hover {
+        transform: translateY(-5px);
+        background-color: #f0fdf4;
+        border-color: #198754;
+    }
+    .icon-box {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+    .icon-box img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+</style>
+
+{% endblock %}

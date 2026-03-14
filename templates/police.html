@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mb-5">
+    <div class="badge bg-primary px-3 py-2 mb-2 shadow-sm">LAW & ORDER</div>
+    <h2 class="display-6 fw-bold">Police Services</h2>
+    <p class="text-muted">Select the category that best describes your report</p>
+</div>
+
+<div class="row g-4">
+    
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/police/assault" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/assault.png" alt="Assault" class="img-fluid rounded">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Assault</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/police/nuisance" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/nuisance.png" alt="Nuisance" class="img-fluid rounded">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Public Nuisance</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/police/missing" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/missing.png" alt="Missing" class="img-fluid rounded">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Missing Article</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/police/women" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/women.png" alt="Women" class="img-fluid rounded">
+                </div>
+                <h6 class="fw-bold text-dark m-0 text-primary">Women Safety</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/police/child" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/child.png" alt="Child" class="img-fluid rounded">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Child Safety</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/police/grievance" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/grievance.png" alt="Grievance" class="img-fluid rounded">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Grievance (Police)</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/sos" class="card h-100 text-decoration-none service-tile shadow-sm border-danger">
+            <div class="card-body text-center p-4 bg-danger-subtle rounded">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/sos.png" alt="SOS" class="img-fluid rounded">
+                </div>
+                <h6 class="fw-bold text-danger m-0">SOS EMERGENCY</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/police/other" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/other.png" alt="Other" class="img-fluid rounded">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Other Issue</h6>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<style>
+    .service-tile {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        border: 1.5px solid #eee;
+    }
+    .service-tile:hover {
+        transform: translateY(-5px);
+        background-color: #f8f9ff;
+        border-color: #0d6efd;
+    }
+    .icon-box {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .icon-box img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+</style>
+
+{% endblock %}

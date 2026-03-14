@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Complaint - {{ category.title() }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+        button { background: #007BFF; color: white; border: none; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        #gps-status { color: green; font-size: 14px; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>File {{ category.title() }} Complaint</h2>
+    
+    <form action="/complaint/{{ department }}/{{ category }}" method="POST" enctype="multipart/form-data">
+        
+        <label>Description of Incident:</label>
+        <textarea name="description" rows="4" required placeholder="Describe what happened..."></textarea>
+        
+        <label>Upload Photo Evidence:</label>
+        <input type="file" name="image" accept="image/*">
+        
+        <input type="hidden" name="latitude" id="lat">
+        <input type="hidden" name="longitude" id="lon">
+        
+        <p id="gps-status">✅ GPS Location Captured Automatically</p>
+
+        <button type="submit">Submit Complaint</button>
+    </form>
+</div>
+
+<script>
+    // Automatically capture GPS when the page loads
+    // Make sure your browser allows 'district-portal.onrender.com' to see your location
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            document.getElementById('lat').value = position.coords.latitude;
+            document.getElementById('lon').value = position.coords.longitude;
+            // Inform user that location has been captured
+            document.getElementById('gps-status').style.display = 'block';
+            console.log("GPS Location Captured");
+        }, function(error) {
+            console.log("GPS Denied or Unavailable.");
+        });
+    }
+</script>
+
+</body>
+</html>
