@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/municipal">Municipal Services</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Roads & Infrastructure</li>
+    </ol>
+</nav>
+
+<div class="text-center mb-5">
+    <h2 class="display-6 fw-bold text-dark">Roads & Infrastructure</h2>
+    <p class="text-muted">Select the specific issue you want to report</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/potholes" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/potholes.png" alt="Potholes" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Potholes</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/road_damage" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/road_damage.png" alt="Road Damage" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Road Damage</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/encroachment" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/encroachment.png" alt="Encroachment" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Encroachment</h6>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <a href="/complaint/municipal/manholes" class="card h-100 text-decoration-none service-tile shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="icon-box mb-3">
+                    <img src="/static/images/manholes.png" alt="Manholes" class="img-fluid">
+                </div>
+                <h6 class="fw-bold text-dark m-0">Open Manholes</h6>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<style>
+    .service-tile {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        border: 1.5px solid #eee;
+        background: white;
+    }
+    .service-tile:hover {
+        transform: translateY(-5px);
+        background-color: #f0fff4;
+        border-color: #198754;
+    }
+    .icon-box {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .icon-box img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+    .breadcrumb-item a {
+        text-decoration: none;
+        color: #198754;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        
+        <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-body p-4">
+                <h4 class="fw-bold text-dark mb-3">Track Your Grievance</h4>
+                <form method="POST" class="row g-2">
+                    <div class="col-8 col-md-9">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                            <input type="text" name="tracking" class="form-control border-start-0 ps-0" 
+                                   placeholder="Enter Tracking ID (e.g. TRK123456)" required>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-3 d-grid">
+                        <button type="submit" class="btn btn-primary fw-bold">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if data %}
+        <div class="card shadow border-0 rounded-4 overflow-hidden mb-5">
+            <div class="card-header bg-white border-bottom p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted small d-block">TRACKING ID</span>
+                        <h4 class="fw-bold m-0 text-primary">{{ data[0] }}</h4>
+                    </div>
+                    <div class="text-end">
+                        <span class="text-muted small d-block">DEPARTMENT</span>
+                        <span class="badge bg-dark text-uppercase">{{ data[2] }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-4">Current Status</h5>
+                
+                <div class="timeline">
+                    <div class="timeline-item active">
+                        <div class="timeline-dot bg-success"></div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold mb-0">Complaint Submitted</h6>
+                            <p class="text-muted small m-0">{{ data[10] }} at {{ data[11] }}</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item {% if data[9] == 'Working' or data[9] == 'Completed' %}active{% endif %}">
+                        <div class="timeline-dot {% if data[9] == 'Working' or data[9] == 'Completed' %}bg-info{% else %}bg-secondary{% endif %}"></div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold mb-0">Department Processing</h6>
+                            <p class="text-muted small m-0">
+                                {% if data[9] == 'Working' or data[9] == 'Completed' %}
+                                Staff is currently addressing the issue.
+                                {% else %}
+                                Awaiting department assignment.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item {% if data[9] == 'Completed' %}active{% endif %}">
+                        <div class="timeline-dot {% if data[9] == 'Completed' %}bg-success{% else %}bg-secondary{% endif %}"></div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold mb-0">Resolved / Closed</h6>
+                            <p class="text-muted small m-0">Final action has been taken by the administrator.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row text-center">
+                    <div class="col-6 border-end">
+                        <span class="text-muted small d-block">PRIORITY</span>
+                        <span class="fw-bold text-{{ 'danger' if data[8] == 1 else 'warning' if data[8] == 2 else 'info' }}">
+                            Level {{ data[8] }}
+                        </span>
+                    </div>
+                    <div class="col-6">
+                        <span class="text-muted small d-block">CATEGORY</span>
+                        <span class="fw-bold">{{ data[3] }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% elif request.method == 'POST' %}
+        <div class="alert alert-danger rounded-4 border-0 shadow-sm text-center">
+            <i class="fa-solid fa-circle-exclamation me-2"></i> Invalid Tracking ID. Please check and try again.
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<style>
+    /* Professional Vertical Timeline */
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 9px;
+        top: 5px;
+        bottom: 5px;
+        width: 2px;
+        background: #e9ecef;
+    }
+    .timeline-item {
+        position: relative;
+        padding-bottom: 30px;
+    }
+    .timeline-item:last-child {
+        padding-bottom: 0;
+    }
+    .timeline-dot {
+        position: absolute;
+        left: -26px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 2px #e9ecef;
+        z-index: 1;
+    }
+    .timeline-item.active .timeline-dot {
+        box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+    }
+    .timeline-item.active .timeline-content h6 {
+        color: #0d6efd;
+    }
+</style>
+
+{% endblock %}

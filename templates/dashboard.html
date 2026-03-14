@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-dark">District Public Grievance Portal</h1>
+    <p class="lead text-muted">Select the appropriate department to file your complaint</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    
+    <div class="col-md-4 col-sm-6">
+        <div class="card h-100 shadow-sm border-0 text-center service-card">
+            <div class="card-img-container p-4">
+                <img src="/static/images/police.png" class="img-fluid" alt="Police" style="max-height: 150px; object-fit: contain;">
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h4 class="card-title fw-bold">Police Services</h4>
+                <p class="card-text text-muted small">Report crimes, harassment, or traffic issues.</p>
+                <a href="/police" class="btn btn-primary mt-auto">Open Department</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+        <div class="card h-100 shadow-sm border-0 text-center service-card">
+            <div class="card-img-container p-4">
+                <img src="/static/images/municipal.png" class="img-fluid" alt="Municipal" style="max-height: 150px; object-fit: contain;">
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h4 class="card-title fw-bold">Municipal Services</h4>
+                <p class="card-text text-muted small">Roads, water supply, sewage, and street lights.</p>
+                <a href="/municipal" class="btn btn-primary mt-auto">Open Department</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+        <div class="card h-100 shadow-sm border-danger text-center service-card">
+            <div class="card-img-container p-4 bg-light">
+                <img src="/static/images/emergency.png" class="img-fluid" alt="Emergency" style="max-height: 150px; object-fit: contain;">
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h4 class="card-title fw-bold text-danger">Emergency Services</h4>
+                <p class="card-text text-muted small">Fire, Ambulance, and SOS situations.</p>
+                <a href="/emergency" class="btn btn-danger mt-auto">Report Emergency</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="d-flex justify-content-center gap-3 py-3 border-top border-bottom bg-white shadow-sm rounded">
+            <a href="/my_complaints" class="btn btn-outline-secondary px-4">
+                <i class="fa-solid fa-list-check me-2"></i>My Complaints
+            </a>
+            <a href="/track" class="btn btn-outline-secondary px-4">
+                <i class="fa-solid fa-magnifying-glass me-2"></i>Track Status
+            </a>
+            <a href="/logout" class="btn btn-outline-danger px-4">
+                <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

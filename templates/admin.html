@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; }
+        h1 { color: #333; }
+        #map { height: 450px; width: 100%; border-radius: 10px; margin-bottom: 30px; border: 2px solid #ccc; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #007BFF; color: white; }
+        .table-img { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; border: 1px solid #ccc; transition: transform 0.2s; }
+        .table-img:hover { transform: scale(1.1); }
+        select, button { padding: 8px; }
+        button { background: #28a745; color: white; border: none; cursor: pointer; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <h1>🚨 Admin Control Center</h1>
+
+    <h2>Live Incident Map</h2>
+    <div id="map"></div>
+
+    <h2>Recent Complaints</h2>
+    <table>
+        <tr>
+            <th>Tracking ID</th>
+            <th>Category</th>
+            <th>Date & Time</th>
+            <th>Location (Auto-Generated)</th>
+            <th>Evidence</th>
+            <th>Status Update</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td><strong>{{ row.tracking_id }}</strong></td>
+            <td style="text-transform: capitalize;">{{ row.category }}</td>
+            <td>{{ row.date }}<br><small>{{ row.time }}</small></td>
+            <td>{{ row.address }}</td>
+            <td>
+                {% if row.file %}
+                    <a href="{{ url_for('static', filename='uploads/' + row.file) }}" target="_blank">
+                        <img src="{{ url_for('static', filename='uploads/' + row.file) }}" class="table-img" title="Click to view full image">
+                    </a>
+                {% else %}
+                    <span style="color: gray;">No Evidence</span>
+                {% endif %}
+            </td>
+            <td>
+                <form action="/update_status" method="POST" style="display: flex; gap: 5px;">
+                    <input type="hidden" name="tracking" value="{{ row.tracking_id }}">
+                    <select name="status">
+                        <option value="Active" {% if row.status == 'Active' %}selected{% endif %}>Active</option>
+                        <option value="In Progress" {% if row.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                        <option value="Resolved" {% if row.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                    </select>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        // Start map centered roughly on Uttar Pradesh (Mathura area)
+        var map = L.map('map').setView([27.4925, 77.6737], 7); 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Loop through complaints and drop markers
+        {% for row in data %}
+            {% if row.latitude and row.longitude %}
+                var popupContent = `
+                    <b>ID: {{ row.tracking_id }}</b><br>
+                    <b>Type:</b> {{ row.category | title }}<br>
+                    <b>Status:</b> {{ row.status }}<br>
+                    <a href='https://www.google.com/maps/search/?api=1&query={{ row.latitude }},{{ row.longitude }}' target='_blank' style='color:blue; text-decoration:underline;'>Open in Google Maps</a>
+                `;
+                L.marker([{{ row.latitude }}, {{ row.longitude }}])
+                    .addTo(map)
+                    .bindPopup(popupContent);
+            {% endif %}
+        {% endfor %}
+    </script>
+
+</body>
+</html>
