@@ -7,10 +7,13 @@
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; }
         .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
-        button { background: #007BFF; color: white; border: none; cursor: pointer; font-size: 16px; font-weight: bold; }
-        button:hover { background: #0056b3; }
-        #gps-status { color: green; font-size: 14px; margin-top: 10px; display: none; }
+        input[type="text"], input[type="file"], textarea, button { width: 100%; margin-top: 10px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+        .submit-btn { background: #007BFF; color: white; border: none; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 20px;}
+        .submit-btn:hover { background: #0056b3; }
+        .camera-btn { background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .retake-btn { background: #dc3545; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; display: none; }
+        #gps-status { color: green; font-size: 14px; margin-top: 10px; display: none; text-align: center; font-weight: bold; }
+        .divider { text-align: center; margin: 15px 0; font-weight: bold; color: #666; }
     </style>
 </head>
 <body>
@@ -23,19 +26,78 @@
         <label>Description of Incident:</label>
         <textarea name="description" rows="4" required placeholder="Describe what happened..."></textarea>
         
-        <label>Upload or Take Photo Evidence:</label>
-        <input type="file" name="image" accept="image/*" capture="environment">
+        <label style="margin-top: 15px; display: block;">1. Upload Photo from Device:</label>
+        <input type="file" name="image" accept="image/*">
+        
+        <div class="divider">OR</div>
+        
+        <label>2. Capture Live Photo:</label>
+        <div id="camera-section" style="text-align: center;">
+            <video id="video" width="100%" autoplay playsinline style="border: 1px solid #ccc; border-radius: 5px; background: #000;"></video>
+            <button type="button" id="snap" class="camera-btn">📸 Capture Picture</button>
+            <canvas id="canvas" style="display:none;"></canvas>
+            <img id="preview" style="display:none; width: 100%; border-radius: 5px; margin-top: 10px; border: 2px solid #28a745;" />
+            <input type="hidden" name="image_data" id="image_data">
+            <button type="button" id="retake" class="retake-btn">🔄 Retake Picture</button>
+        </div>
         
         <input type="hidden" name="latitude" id="lat">
         <input type="hidden" name="longitude" id="lon">
         
-        <p id="gps-status">✅ GPS Location Captured Automatically</p>
+        <p id="gps-status">✅ GPS Location Captured</p>
 
-        <button type="submit">Submit Complaint</button>
+        <button type="submit" class="submit-btn">Submit Complaint</button>
     </form>
 </div>
 
 <script>
+    // --- 1. LIVE CAMERA SCRIPT ---
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const snap = document.getElementById('snap');
+    const preview = document.getElementById('preview');
+    const imageDataInput = document.getElementById('image_data');
+    const retake = document.getElementById('retake');
+
+    // Start Webcam
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(function(stream) {
+            video.srcObject = stream;
+        })
+        .catch(function(err) {
+            console.log("Camera access denied or unavailable:", err);
+            document.getElementById('camera-section').innerHTML = "<p style='color:red;'>Camera access denied. Please use the 'Upload' option above.</p>";
+        });
+    }
+
+    // Take Picture
+    snap.addEventListener("click", function() {
+        if (!video.videoWidth) return; // Prevent clicking before video loads
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        const dataURI = canvas.toDataURL('image/png');
+        imageDataInput.value = dataURI; // Save base64 data to hidden input
+        
+        preview.src = dataURI;
+        preview.style.display = 'block';
+        video.style.display = 'none';
+        snap.style.display = 'none';
+        retake.style.display = 'block';
+    });
+
+    // Retake Picture
+    retake.addEventListener("click", function() {
+        imageDataInput.value = "";
+        preview.style.display = 'none';
+        video.style.display = 'block';
+        snap.style.display = 'block';
+        retake.style.display = 'none';
+    });
+
+    // --- 2. GPS CAPTURE SCRIPT ---
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             document.getElementById('lat').value = position.coords.latitude;
