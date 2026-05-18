@@ -1,99 +1,211 @@
 /* --- OFFICIAL PORTAL THEME VARIABLES --- */
 :root {
-    --gov-blue: #004a99;
-    --gov-success: #198754;
-    --gov-danger: #dc3545;
-    --bg-light: #f4f7f6;
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --gov-blue: #0b3c5d;          /* Deeper, more authoritative executive blue */
+    --gov-accent: #328cc1;        /* Dynamic secondary blue for focus states */
+    --gov-success: #107896;       /* Clean corporate green/teal */
+    --gov-danger: #e03a3e;        /* Highly visible alert red */
+    --bg-light: #f7f9fc;          /* Soft, premium off-white/gray background */
+    --card-bg: #ffffff;
+    --text-main: #1d2731;         /* Crisp near-black for perfect readability */
+    --text-muted: #626d7a;
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 10px 30px rgba(11, 60, 93, 0.06);
+    --shadow-lg: 0 20px 40px rgba(11, 60, 93, 0.12);
 }
 
 /* --- GLOBAL TWEAKS --- */
 body {
     background-color: var(--bg-light);
-    color: #333;
+    color: var(--text-main);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* --- SERVICE TILES (POLICE, MUNICIPAL, ETC) --- */
-/* This ensures all your icons look the same width/height */
+/* --- NAVIGATION / HEADER BRANDING --- */
+.navbar {
+    background: linear-gradient(135deg, var(--gov-blue) 0%, #062338 100%) !important;
+    box-shadow: var(--shadow-sm);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* --- SERVICE TILES (POLICE, MUNICIPAL, EMERGENCY) --- */
 .service-tile {
-    transition: var(--transition);
-    border-radius: 15px !important;
-    border: 1px solid rgba(0,0,0,0.05) !important;
+    background: var(--card-bg);
+    transition: var(--transition-smooth);
+    border-radius: 20px !important; /* Elegant rounded styling */
+    border: 1px solid rgba(11, 60, 93, 0.05) !important;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Glass look and lift on hover */
 .service-tile:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 20px rgba(0,0,0,0.1) !important;
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--shadow-lg) !important;
+    border-color: var(--gov-accent) !important;
+}
+
+/* Decorative subtle light splash behind icons on tile hover */
+.service-tile::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(50,140,193,0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: var(--transition-smooth);
+    pointer-events: none;
+}
+
+.service-tile:hover::before {
+    opacity: 1;
 }
 
 .icon-box {
-    height: 100px; /* Forces uniform size across all categories */
+    height: 110px; /* Enhanced spatial padding */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 15px;
+    background: rgba(247, 249, 252, 0.6);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    transition: var(--transition-smooth);
+}
+
+.service-tile:hover .icon-box {
+    background: rgba(50, 140, 193, 0.08);
 }
 
 .icon-box img {
     max-height: 100%;
     max-width: 100%;
-    object-fit: contain; /* Prevents distortion seen in your earlier screenshots */
+    object-fit: contain;
+    transition: var(--transition-smooth);
+}
+
+.service-tile:hover .icon-box img {
+    transform: scale(1.1); /* Fun, subtle pop out animation */
+}
+
+/* --- SPECIAL SERVICE TILE VARIANTS --- */
+/* Red-tinted styling for emergency cards */
+.bg-danger .fw-bold.text-white,
+.service-tile.bg-danger:hover h6 {
+    color: #ffffff !important;
 }
 
 /* --- FORM ENHANCEMENTS --- */
 .card.shadow {
-    border-radius: 12px;
+    border-radius: 20px;
+    border: none !important;
+    box-shadow: var(--shadow-md) !important;
+    background: var(--card-bg);
 }
 
-input.form-control:focus, 
-textarea.form-control:focus {
-    border-color: var(--gov-blue);
-    box-shadow: 0 0 0 0.25rem rgba(0, 74, 153, 0.1);
+.form-control {
+    border-radius: 10px;
+    padding: 12px 16px;
+    border: 1.5px solid #e1e6eb;
+    transition: var(--transition-smooth);
+    background-color: #fcfdfe;
 }
 
-/* --- DASHBOARD LOGOS (The ones from your screenshots) --- */
+.form-control:focus {
+    border-color: var(--gov-accent);
+    box-shadow: 0 0 0 4px rgba(50, 140, 193, 0.15);
+    background-color: #fff;
+}
+
+/* Style for Buttons */
+.btn-primary {
+    background-color: var(--gov-blue);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary:hover {
+    background-color: var(--gov-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(50, 140, 193, 0.3);
+}
+
+/* --- DASHBOARD LOGOS & BANNER CONTAINER --- */
 .card-img-container {
-    height: 180px;
+    height: 190px;
     background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 25px;
+    border-radius: 16px 16px 0 0;
 }
 
 /* --- TRACKING TIMELINE (TRACK.HTML) --- */
 .timeline {
     position: relative;
-    padding-left: 1.5rem;
+    padding-left: 2rem;
 }
 
 .timeline::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 7px;
+    top: 5px;
     bottom: 0;
-    width: 2px;
-    background: #dee2e6;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--gov-blue), #dee2e6);
+    border-radius: 2px;
 }
 
 .timeline-item {
     position: relative;
-    padding-bottom: 2rem;
+    padding-bottom: 2.5rem;
 }
 
 .timeline-dot {
     position: absolute;
-    left: -1.95rem;
-    width: 1rem;
-    height: 1rem;
+    left: -2.05rem;
+    top: 4px;
+    width: 18px;
+    height: 18px;
     background: #fff;
-    border: 2px solid var(--gov-blue);
+    border: 3.5px solid var(--gov-blue);
     border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(11, 60, 93, 0.1);
+    transition: var(--transition-smooth);
+}
+
+.timeline-item:hover .timeline-dot {
+    background: var(--gov-accent);
+    border-color: var(--gov-accent);
+    transform: scale(1.2);
 }
 
 /* --- CAMERA PREVIEW BOX --- */
 #video, #preview {
+    border-radius: 16px;
+    background-color: #0d1117;
+    border: 3px solid #e1e6eb;
+    box-shadow: var(--shadow-md);
+}
+
+/* --- BADGES & LABELS --- */
+.badge {
     border-radius: 8px;
-    background-color: #000;
+    padding: 6px 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
